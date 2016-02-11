@@ -1,8 +1,22 @@
-var days = ["Domingo","Lunes","Martes","Miércoles", "Jueves","Viernes","Sábado"]
-var day = new Date().getDay();
-var text = document.getElementById("day").innerHTML = days[new Date().getDay()];
+var express = require('express');
+var app = express();
 
-if (day == 5){
-	document.getElementById("fridaylunch").style.display = "block";
-	document.getElementById("fridaySandwich").src = "http://loremflickr.com/320/240/Sandwich";
-}
+app.set('port', (process.env.PORT || 5000));
+
+app.use(express.static(__dirname + '/public'));
+
+
+
+// views is directory for all template files
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/scripts'));
+
+app.get('/', function(request, response) {
+  response.render('pages/index');
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
